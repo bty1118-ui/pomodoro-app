@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self';" />
+  <title>番茄钟</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app">
+    <!-- Phase label -->
+    <div class="phase-label" id="phaseLabel">Focus</div>
+
+    <!-- Circular timer -->
+    <div class="timer-wrap">
+      <svg class="ring" viewBox="0 0 220 220" aria-hidden="true">
+        <circle class="ring-bg" cx="110" cy="110" r="100" />
+        <circle class="ring-progress" id="ringProgress" cx="110" cy="110" r="100" />
+      </svg>
+      <div class="time-display" id="timeDisplay">25:00</div>
+    </div>
+
+    <!-- Controls -->
+    <div class="controls">
+      <button class="btn btn-primary" id="toggleBtn" type="button">Start</button>
+      <button class="btn btn-secondary" id="resetBtn" type="button">Reset</button>
+    </div>
+
+    <!-- Session dots -->
+    <div class="session-dots" id="sessionDots"></div>
+
+    <!-- Tabs -->
+    <div class="tabs">
+      <button class="tab active" data-tab="tasks" type="button">任务清单</button>
+      <button class="tab" data-tab="settings" type="button">设置</button>
+    </div>
+
+    <!-- Tasks panel -->
+    <div class="panel" id="panel-tasks" data-panel="tasks">
+      <div class="task-add">
+        <input type="text" id="taskInput" placeholder="添加任务，回车确认…" maxlength="80" />
+        <button class="btn-icon" id="addTaskBtn" type="button" title="添加">+</button>
+      </div>
+      <ul class="task-list" id="taskList"></ul>
+    </div>
+
+    <!-- Settings panel -->
+    <div class="panel hidden" id="panel-settings" data-panel="settings">
+      <div class="setting-row">
+        <label for="themeSelect">主题</label>
+        <select id="themeSelect">
+          <option value="modern">Modern</option>
+          <option value="dark">Dark</option>
+          <option value="warm">Warm sunset</option>
+          <option value="cool">Cool ocean</option>
+        </select>
+      </div>
+      <div class="setting-row">
+        <label for="workMin">专注时长（分钟）</label>
+        <input type="number" id="workMin" min="1" max="180" />
+      </div>
+      <div class="setting-row">
+        <label for="shortMin">短休（分钟）</label>
+        <input type="number" id="shortMin" min="1" max="60" />
+      </div>
+      <div class="setting-row">
+        <label for="longMin">长休（分钟）</label>
+        <input type="number" id="longMin" min="1" max="60" />
+      </div>
+      <div class="setting-row">
+        <label for="longInterval">长休间隔（几个番茄）</label>
+        <input type="number" id="longInterval" min="2" max="12" />
+      </div>
+      <div class="setting-row switch-row">
+        <label for="autoStartBreaks">自动开始休息</label>
+        <input type="checkbox" id="autoStartBreaks" />
+      </div>
+      <div class="setting-row switch-row">
+        <label for="autoStartPomodoros">自动开始下一个专注</label>
+        <input type="checkbox" id="autoStartPomodoros" />
+      </div>
+      <div class="setting-row switch-row">
+        <label for="soundOn">结束提示音</label>
+        <input type="checkbox" id="soundOn" />
+      </div>
+    </div>
+  </div>
+
+  <script src="renderer.js"></script>
+</body>
+</html>

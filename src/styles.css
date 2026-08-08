@@ -1,0 +1,295 @@
+:root {
+  /* Base UI tokens — overridden per-theme at runtime (see THEMES in renderer.js). */
+  --bg: #f7f7f8;
+  --card: #ffffff;
+  --text: #2b2d31;
+  --text-dim: #8a8f98;
+  --border: #ececef;
+  --hover: #f1f1f3;
+  --thumb: #d8d8de;
+  --shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+  --danger: #e63946;
+  --accent: #e76f51;        /* focus (tomato red) — set per phase/theme */
+  --accent-soft: rgba(231, 111, 81, 0.12);
+  --radius: 16px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body { height: 100%; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  user-select: none;
+  overflow: hidden;
+  transition: background 0.25s ease, color 0.25s ease;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+  padding: 22px 22px 16px;
+}
+
+/* ---- Phase label ---- */
+.phase-label {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 1.6px;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 16px;
+  transition: color 0.3s ease;
+}
+
+/* ---- Timer ring ---- */
+.timer-wrap {
+  position: relative;
+  width: 220px;
+  height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ring { width: 220px; height: 220px; transform: rotate(-90deg); }
+
+.ring-bg {
+  fill: none;
+  stroke: var(--border);
+  stroke-width: 10;
+}
+
+.ring-progress {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 10;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.3s linear, stroke 0.3s ease;
+}
+
+.time-display {
+  position: absolute;
+  font-size: 54px;
+  font-weight: 300;
+  letter-spacing: 1px;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---- Controls ---- */
+.controls {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.btn {
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  padding: 12px 26px;
+  border-radius: 999px;
+  transition: filter 0.2s ease, background 0.2s ease, color 0.2s ease, transform 0.1s ease;
+}
+.btn:active { transform: scale(0.97); }
+
+.btn-primary {
+  background: var(--accent);
+  color: #fff;
+  min-width: 132px;
+}
+.btn-primary:hover { filter: brightness(1.07); }
+
+.btn-secondary {
+  background: transparent;
+  color: var(--text-dim);
+  border: 1.5px solid var(--border);
+}
+.btn-secondary:hover { background: var(--hover); color: var(--text); }
+
+/* ---- Session dots ---- */
+.session-dots {
+  display: flex;
+  gap: 8px;
+  margin-top: 14px;
+}
+.session-dots .dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--border);
+  transition: background 0.2s ease;
+}
+.session-dots .dot.done { background: var(--accent); }
+
+/* ---- Tabs ---- */
+.tabs {
+  display: flex;
+  gap: 8px;
+  margin-top: 18px;
+  align-self: stretch;
+}
+.tab {
+  flex: 1;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-dim);
+  padding: 8px 0;
+  border-bottom: 2px solid transparent;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+.tab.active { color: var(--text); border-bottom-color: var(--accent); }
+
+/* ---- Panels ---- */
+.panel {
+  flex: 1;
+  width: 100%;
+  margin-top: 12px;
+  overflow-y: auto;
+}
+.panel.hidden { display: none; }
+
+/* ---- Tasks ---- */
+.task-add {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+#taskInput {
+  flex: 1;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  padding: 9px 12px;
+  font-family: inherit;
+  font-size: 14px;
+  outline: none;
+  background: var(--card);
+  color: var(--text);
+}
+#taskInput:focus { border-color: var(--accent); }
+
+.btn-icon {
+  width: 38px;
+  height: 38px;
+  border: none;
+  border-radius: 10px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  transition: filter 0.2s ease;
+}
+.btn-icon:hover { filter: brightness(1.07); }
+
+.task-list { list-style: none; }
+.empty-hint {
+  color: var(--text-dim);
+  font-size: 13px;
+  text-align: center;
+  padding: 20px 0;
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 10px;
+  border-radius: 10px;
+  margin-bottom: 6px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+.task-item.current { border-color: var(--accent); background: var(--accent-soft); }
+.task-item.done .task-text { text-decoration: line-through; color: var(--text-dim); }
+
+.task-check {
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--border);
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 11px;
+  color: #fff;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+.task-item.done .task-check { background: var(--accent); border-color: var(--accent); }
+
+.task-text {
+  flex: 1;
+  font-size: 14px;
+  cursor: pointer;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.task-pomo { font-size: 11px; color: var(--text-dim); flex-shrink: 0; }
+.task-del {
+  background: none;
+  border: none;
+  color: var(--text-dim);
+  cursor: pointer;
+  font-size: 15px;
+  padding: 2px 6px;
+  border-radius: 6px;
+}
+.task-del:hover { color: var(--danger); }
+
+/* ---- Settings ---- */
+.setting-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 11px 4px;
+  border-bottom: 1px solid var(--border);
+}
+.setting-row:last-child { border-bottom: none; }
+.setting-row label { font-size: 14px; }
+
+.setting-row input[type="number"],
+.setting-row select {
+  width: auto;
+  min-width: 90px;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  padding: 6px 8px;
+  font-family: inherit;
+  font-size: 14px;
+  text-align: center;
+  outline: none;
+  background: var(--card);
+  color: var(--text);
+  cursor: pointer;
+}
+.setting-row input[type="number"] { width: 72px; cursor: text; }
+.setting-row input[type="number"]:focus,
+.setting-row select:focus { border-color: var(--accent); }
+
+.switch-row input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+
+/* ---- Scrollbar ---- */
+.panel::-webkit-scrollbar { width: 6px; }
+.panel::-webkit-scrollbar-thumb { background: var(--thumb); border-radius: 3px; }
+.panel::-webkit-scrollbar-track { background: transparent; }
